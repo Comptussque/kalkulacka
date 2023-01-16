@@ -41,7 +41,19 @@ class Application(tk.Tk):
         self.entry.bind("<KP_Enter>", self.process)
 
     def process(self, e: tk.Event):
-        print(self.entry.value)
+        value = self.entry.value
+        if value in ["+","-","*","/","//","**","%"]:
+            print(value)
+            for i, op in enumerate(value.split()):
+                print(i, op)
+                num1 = self.listbox.get(i)
+                num2 = self.listbox.get(i+1)
+                res = eval(f"{num1} {value} {num2}")
+                self.listbox.delete(i, i+1)
+                self.listbox.insert(i, res)
+        else:
+            self.listbox.insert(self.listbox.index("end"), self.entry.value)
+            self.entry.value = "INVALID INPUT"
         self.entry.value = ""
 
     def quit(self, event=None):
