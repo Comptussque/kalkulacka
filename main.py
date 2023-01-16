@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import tkinter as tk
+import math
 
 # from tkinter import ttk
 
@@ -41,20 +42,19 @@ class Application(tk.Tk):
         self.entry.bind("<KP_Enter>", self.process)
 
     def process(self, e: tk.Event):
-        value = self.entry.value
-        if value in ["+","-","*","/","//","**","%"]:
-            print(value)
-            for i, op in enumerate(value.split()):
-                print(i, op)
-                num1 = self.listbox.get(i)
-                num2 = self.listbox.get(i+1)
+        values = self.entry.value.split()
+        for value in values:
+            if value in ["+","-","*","/","//","**","%"]:
+                num1 = self.listbox.get(0)
+                num2 = self.listbox.get(1)
                 res = eval(f"{num1} {value} {num2}")
-                self.listbox.delete(i, i+1)
-                self.listbox.insert(i, res)
-        else:
-            self.listbox.insert(self.listbox.index("end"), self.entry.value)
-            self.entry.value = "INVALID INPUT"
-        self.entry.value = ""
+                self.listbox.delete(0, 1)
+                self.listbox.insert(0, res)
+            elif value.isalnum():
+                self.listbox.insert(self.listbox.index("end"), value)
+            else:
+                self.entry.value = "INVALID INPUT"
+            self.entry.value = ""
 
     def quit(self, event=None):
         super().quit()
