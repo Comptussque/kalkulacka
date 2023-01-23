@@ -78,7 +78,7 @@ class Application(tk.Tk):
             "log":  1,
             "log2": 1,
             # consts (key = name     value = value)
-            "pi": 3.1415
+            "pi": math.pi
         }
 
     def process(self, e: tk.Event):
@@ -116,7 +116,7 @@ class Application(tk.Tk):
 
     # Button functions
     def delete(self):
-            for select_index in self.listbox.curselection():
+            for select_index in self.listbox.curselection()[::-1]: # curseselction returns sorted list low to high, reversed because index bullshit
                 self.listbox.delete(select_index)
     def copy(self):
         pass
